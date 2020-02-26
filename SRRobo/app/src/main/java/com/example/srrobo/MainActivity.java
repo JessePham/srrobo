@@ -8,7 +8,7 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button search, connect;
+    private Button search, connect, video;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,18 +17,28 @@ public class MainActivity extends AppCompatActivity {
 
         search = findViewById(R.id.setButton);
 
-        search.setOnClickListener(new View.OnClickListener() {
+        /*search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openSearchView();
             }
         });
 
+         */
+
         connect = findViewById(R.id.connectButton);
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openBluetoothView();
+                openGPSView();
+            }
+        });
+
+        video = findViewById(R.id.videoButton);
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openVideoView();
             }
         });
 
@@ -37,14 +47,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void openSearchView(){
-        Intent intent = new Intent(this, SetStartPointActivity.class);
-        startActivity(intent);
 
+
+    private void openGPSView(){
+        Intent intent = new Intent(this, GetGPSLocation.class);
+        startActivity(intent);
     }
 
-    private void openBluetoothView(){
-        Intent intent = new Intent(this, BluetoothConnection.class);
+    private void openVideoView(){
+        Intent intent = new Intent(this, GetLiveStream.class);
         startActivity(intent);
     }
 }
