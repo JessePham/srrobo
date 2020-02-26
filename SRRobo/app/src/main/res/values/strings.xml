@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SRRobo</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_view_paired_devices">ViewPairedDevices</string>
+</resources>
