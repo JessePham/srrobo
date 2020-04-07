@@ -1,5 +1,8 @@
 package com.example.srrobo;
 
+import com.jcraft.jsch.*;
+
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -105,8 +108,8 @@ public class GetLiveStream extends AppCompatActivity {
             }
         });
 
-        JSch jsch = new JSch();
-        Session s =
+        //JSch jsch = new JSch();
+        //Session s =
 
 
 
