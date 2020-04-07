@@ -8,7 +8,7 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button search, connect, video;
+    private Button search, connect, video, test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        test = findViewById(R.id.testViewBtn);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTestView();
+            }
+        });
+
 
     }
 
@@ -56,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void openVideoView(){
         Intent intent = new Intent(this, GetLiveStream.class);
+        startActivity(intent);
+    }
+
+    private void openTestView(){
+        Intent intent = new Intent(this, TestConnection.class);
         startActivity(intent);
     }
 }
