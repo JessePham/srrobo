@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void openGPSView(){
-        Intent intent = new Intent(this, GetGPSLocation.class);
+        Intent intent = new Intent(this, GetConnection.class);
         startActivity(intent);
     }
 

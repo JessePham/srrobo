@@ -55,6 +55,11 @@ public class BluetoothConnection extends AppCompatActivity {
 
 
     }
+
+
+
+
+
     public void getIPandPort()
     {
         String iPandPort = uuid.getText().toString();
@@ -64,6 +69,8 @@ public class BluetoothConnection extends AppCompatActivity {
         wifiModulePort = Integer.valueOf(temp[1]);
         Log.d("MY TEST","IP:" +wifiModuleIp);
         Log.d("MY TEST","PORT:"+wifiModulePort);
+
+
     }
 
     public class Socket_AsyncTask extends AsyncTask<Void,Void,Void>

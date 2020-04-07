@@ -6,53 +6,113 @@
     android:layout_height="match_parent"
     tools:context=".GetLiveStream">
 
-    <EditText
-        android:id="@+id/addr"
-        android:layout_width="338dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
-        android:text="http://10.251.111.161:8081/"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
-
-    <Button
-        android:id="@+id/connect"
-        android:layout_width="315dp"
-        android:layout_height="52dp"
-        android:text="Connect"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addr"
-        app:layout_constraintVertical_bias="0.0" />
-
     <WebView
         android:id="@+id/webview"
-        android:layout_width="372dp"
-        android:layout_height="313dp"
+        android:layout_width="378dp"
+        android:layout_height="198dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connect"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.03" />
 
     <ImageButton
         android:id="@+id/goFowardBtn"
-        android:layout_width="109dp"
-        android:layout_height="78dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:foreground="@mipmap/arrow_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.717"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapView"
+        app:layout_constraintVertical_bias="0.054"
+        app:srcCompat="@drawable/arrow_up_foreground" />
+
+    <ImageButton
+        android:id="@+id/goRightBtn"
+        android:layout_width="90dp"
+        android:layout_height="100dp"
+        android:foreground="@mipmap/arrow_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.984"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/goFowardBtn"
+        app:layout_constraintVertical_bias="0.446"
+        app:srcCompat="@drawable/arrow_up_foreground" />
+
+    <ImageButton
+        android:id="@+id/goLeftBtn"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:foreground="@mipmap/arrow_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/goFowardBtn"
+        app:layout_constraintVertical_bias="0.446"
+        app:srcCompat="@drawable/arrow_up_foreground" />
+
+    <ImageButton
+        android:id="@+id/goBackwardBtn"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:foreground="@mipmap/arrow_down"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.717"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goFowardBtn"
+        app:layout_constraintVertical_bias="0.819"
+        app:srcCompat="@drawable/arrow_up_foreground" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="355dp"
+        android:layout_height="181dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/webview"
-        app:layout_constraintVertical_bias="0.114"
-        app:srcCompat="@drawable/move_forwards" />
+        app:layout_constraintVertical_bias="0.056" />
+
+    <ImageButton
+        android:id="@+id/pingHereBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapView"
+        app:layout_constraintVertical_bias="0.004"
+        app:srcCompat="@mipmap/ping" />
+
+    <Button
+        android:id="@+id/autoBtn"
+        android:layout_width="105dp"
+        android:layout_height="59dp"
+        android:background="#3B73FF"
+        android:text="AUTO"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="14dp"
+        tools:layout_editor_absoluteY="540dp" />
+
+    <Button
+        android:id="@+id/endRunBtn"
+        android:layout_width="105dp"
+        android:layout_height="59dp"
+        android:background="#3B73FF"
+        android:text="END RUN"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="633dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

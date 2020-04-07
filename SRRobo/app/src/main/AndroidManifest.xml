@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".GetLiveStream"> </activity>
-        <activity android:name=".GetGPSLocation" > </activity>
+        <activity android:name=".GetConnection" > </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
