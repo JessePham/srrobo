@@ -100,8 +100,11 @@
         android:text="AUTO"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="540dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/goLeftBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pingHereBtn"
+        app:layout_constraintVertical_bias="0.142" />
 
     <Button
         android:id="@+id/endRunBtn"
@@ -111,8 +114,12 @@
         android:text="END RUN"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="633dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/goBackwardBtn"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pingHereBtn"
+        app:layout_constraintVertical_bias="0.649" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

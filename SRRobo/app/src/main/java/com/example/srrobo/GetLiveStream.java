@@ -6,6 +6,7 @@ import com.jcraft.jsch.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
@@ -30,7 +31,7 @@ public class GetLiveStream extends AppCompatActivity {
     //EditText addrField;
     Button endBtn;
     WebView streamView;
-    ImageButton upBtn, backBtn, leftBtn, rightBtn;
+    ImageButton upBtn, backBtn, leftBtn, rightBtn, pingBtn;
     public static String CMD = "0";
 
     //XML file to store current Ip and Port
@@ -51,8 +52,17 @@ public class GetLiveStream extends AppCompatActivity {
         //addrField = (EditText)findViewById(R.id.addr);
         streamView = (WebView)findViewById(R.id.webview);
 
-                playStream();
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
+        //check if string has "http://" and "/" at the end just in case
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        ipText =  sharedPreferences.getString(IP, null);
+        if (ipText != null){
+            playStream();
+        } else {
+            Toast.makeText(GetLiveStream.this,
+                    "no ip found", Toast.LENGTH_LONG).show();
+        }
         upBtn = (ImageButton)findViewById(R.id.goFowardBtn);
         upBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -108,6 +118,17 @@ public class GetLiveStream extends AppCompatActivity {
             }
         });
 
+        pingBtn = (ImageButton) findViewById(R.id.pingHereBtn);
+        pingBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CMD = "Ping";
+                System.out.println(GetConnection.wifiModuleIp);
+                Socket_AsyncTask cmd_go_ping = new Socket_AsyncTask();
+                cmd_go_ping.execute();
+            }
+        });
+
         //JSch jsch = new JSch();
         //Session s =
 
@@ -121,9 +142,7 @@ public class GetLiveStream extends AppCompatActivity {
         //Uri aTest = Uri.parse("http://10.251.111.161:8081/");
         //Uri aTest = Uri.parse("http://www.ted.com/talks/download/video/8584/talk/761");
 
-        //check if string has "http://" and "/" at the end just in case
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        ipText =  sharedPreferences.getString(IP, null);
+
 
         //use aTest for testing the video feed
         String aTest = "http://10.251.111.161:8081/";
@@ -131,10 +150,6 @@ public class GetLiveStream extends AppCompatActivity {
         String ipAndPortAddress = "http://"+ipText+":"+PORT_NO+"/";
 
         //change to aTest if you wanna do debugging
-        if(ipText == null){
-            Toast.makeText(GetLiveStream.this,
-                    "UriSrc == null", Toast.LENGTH_LONG).show();
-        }else{
 
             streamView.loadUrl(ipAndPortAddress);
             //add code to auto add "http://" - required to run
@@ -142,7 +157,7 @@ public class GetLiveStream extends AppCompatActivity {
             Toast.makeText(GetLiveStream.this,
                     "Connecting to: " + ipText,
                     Toast.LENGTH_LONG).show();
-        }
+
     }
 
     @Override
