@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.DataOutputStream;
@@ -20,7 +21,7 @@ import java.net.UnknownHostException;
 
 public class GetConnection extends AppCompatActivity {
     //UI Element
-    Button btnUp;
+    Button connect;
     Button btnDown;
     EditText txtAddress;
     Socket myAppSocket = null;
@@ -33,6 +34,7 @@ public class GetConnection extends AppCompatActivity {
     public static final String MyPREFERENCES = "CurrentUserIP";
     public static final String IP = "ipKey";
     SharedPreferences sharedPreferences;
+    TextView test;
 
     private static final String PORT_NO = "21567";
 
@@ -43,23 +45,24 @@ public class GetConnection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_connection);
 
-        btnUp = (Button) findViewById(R.id.btnUp);
+        connect = (Button) findViewById(R.id.connectBtn);
 
         txtAddress = (EditText) findViewById(R.id.ipAddress);
 
         sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        test = (TextView) findViewById(R.id.testText);
 
 
-        btnUp.setOnClickListener(new View.OnClickListener() {
+        connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ipText = txtAddress.getText().toString();
-                if (ipText.matches("[0-9]+")){
+                if (ipText.matches("[0-9.]*")){
                     getIPandPort();
 
-                    CMD = "GetGPS";
-                    Socket_AsyncTask cmd_increase_servo = new Socket_AsyncTask();
-                    cmd_increase_servo.execute();
+                    //CMD = "GetGPS";
+                    //Socket_AsyncTask cmd_increase_servo = new Socket_AsyncTask();
+                   // cmd_increase_servo.execute();
 
                 } else {
 
@@ -88,6 +91,8 @@ public class GetConnection extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(IP, ipText);
         editor.commit();
+
+        test.setText(sharedPreferences.getString(IP, null));
 
     }
     public class Socket_AsyncTask extends AsyncTask<Void,Void,Void>
