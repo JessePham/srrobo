@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "977212171222",
+    "firebase_url": "https://srrobo.firebaseio.com",
+    "project_id": "srrobo",
+    "storage_bucket": "srrobo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977212171222:android:10bb239e2531a48c0c7a77",
+        "android_client_info": {
+          "package_name": "com.example.srrobo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "977212171222-2u47d5q5l2m918i4oqsnc5v3olj7ahn5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.srrobo",
+            "certificate_hash": "47600c97e359c87ef2d7d8a65feb7729a23b86ed"
+          }
+        },
+        {
+          "client_id": "977212171222-iunmhdhdn4l1fkn0j19mm525uulpiet2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC_gV7YboYfgam8lryhoQLfP-jmJrZq5g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "977212171222-iunmhdhdn4l1fkn0j19mm525uulpiet2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

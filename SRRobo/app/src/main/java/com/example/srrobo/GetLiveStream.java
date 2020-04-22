@@ -1,6 +1,15 @@
 package com.example.srrobo;
 
-import com.jcraft.jsch.*;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 
@@ -26,7 +35,7 @@ import android.widget.ImageButton;
 import android.webkit.*;
 import android.widget.Toast;
 import android.net.Uri;
-public class GetLiveStream extends AppCompatActivity {
+public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallback{
 
     //EditText addrField;
     Button endBtn;
@@ -41,13 +50,52 @@ public class GetLiveStream extends AppCompatActivity {
 
     private static final String PORT_NO = "8081";
     private static String ipText = "";
+    SupportMapFragment mapFragment;
+    GoogleMap googleMap;
+    private DatabaseReference databaseRef;
 
 
+
+    @Override
+    public void onMapReady(final GoogleMap aMap){
+        googleMap = aMap;
+
+        // TODO:
+        //need to get lat lng from gps from sr robo
+        //do the sockets matter or can we use the same port? or a port for the gps ?
+        CMD = "GetLocation";
+        Socket_AsyncTask cmd_get_location = new Socket_AsyncTask();
+        cmd_get_location.execute();
+
+        databaseRef = FirebaseDatabase.getInstance().getReference("command");
+
+
+        //followCar to keep updating
+        pingBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CMD = "Ping";
+                System.out.println(GetConnection.wifiModuleIp);
+                Socket_AsyncTask cmd_go_ping = new Socket_AsyncTask();
+               // cmd_go_ping.execute();
+                pingLocation(1,1);
+                databaseRef.setValue(CMD);
+
+
+            }
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_live_stream);
+
+        //gps map stuff
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
+        mapFragment.getMapAsync((OnMapReadyCallback) this);
+        //googleMap.
 
         //addrField = (EditText)findViewById(R.id.addr);
         streamView = (WebView)findViewById(R.id.webview);
@@ -70,7 +118,9 @@ public class GetLiveStream extends AppCompatActivity {
                 CMD = "Forward";
                 System.out.println(GetConnection.wifiModuleIp);
                 Socket_AsyncTask cmd_go_foward = new Socket_AsyncTask();
-                cmd_go_foward.execute();
+                //cmd_go_foward.execute();
+                databaseRef.setValue(CMD);
+
             }
         });
 
@@ -81,7 +131,9 @@ public class GetLiveStream extends AppCompatActivity {
                 CMD = "Backward";
                 System.out.println(GetConnection.wifiModuleIp);
                 Socket_AsyncTask cmd_go_backward = new Socket_AsyncTask();
-                cmd_go_backward.execute();
+               // cmd_go_backward.execute();
+                databaseRef.setValue(CMD);
+
             }
         });
 
@@ -92,7 +144,9 @@ public class GetLiveStream extends AppCompatActivity {
                 CMD = "Right";
                 System.out.println(GetConnection.wifiModuleIp);
                 Socket_AsyncTask cmd_go_right = new Socket_AsyncTask();
-                cmd_go_right.execute();
+               // cmd_go_right.execute();
+                databaseRef.setValue(CMD);
+
             }
         });
 
@@ -103,7 +157,9 @@ public class GetLiveStream extends AppCompatActivity {
                 CMD = "Left";
                 System.out.println(GetConnection.wifiModuleIp);
                 Socket_AsyncTask cmd_go_left = new Socket_AsyncTask();
-                cmd_go_left.execute();
+                //cmd_go_left.execute();
+                databaseRef.setValue(CMD);
+
             }
         });
 
@@ -111,31 +167,47 @@ public class GetLiveStream extends AppCompatActivity {
         endBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                endRun();
                 CMD = "End";
                 System.out.println(GetConnection.wifiModuleIp);
                 Socket_AsyncTask cmd_go_end = new Socket_AsyncTask();
-                cmd_go_end.execute();
+                //cmd_go_end.execute();
+                databaseRef.setValue(CMD);
+
             }
         });
 
         pingBtn = (ImageButton) findViewById(R.id.pingHereBtn);
-        pingBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CMD = "Ping";
-                System.out.println(GetConnection.wifiModuleIp);
-                Socket_AsyncTask cmd_go_ping = new Socket_AsyncTask();
-                cmd_go_ping.execute();
-            }
-        });
-
-        //JSch jsch = new JSch();
-        //Session s =
-
 
 
 
     }
+
+    private void endRun(){
+        //save video to google drive
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imagesRef = storageRef.child("images"); //points to images folder
+
+
+
+    }
+
+    private void pingLocation(double lat, double lng){
+        LatLng SJSU = new LatLng(37.3352, 121.8811);
+        //LatLng newPin = new LatLng(lat, lng);
+
+
+        googleMap.addMarker(new MarkerOptions().position(SJSU));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(SJSU));
+
+    }
+
+    private void followCar(LatLng currentLocation){
+        float zoomLevel = 16.0f; //This goes up to 21
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, zoomLevel));
+    }
+
 
     private void playStream(){//String src){
         //Uri UriSrc = Uri.parse(src);
