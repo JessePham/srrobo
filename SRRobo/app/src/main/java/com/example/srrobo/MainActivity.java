@@ -8,23 +8,14 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button search, connect, video, test;
+    private Button databse, connect, video;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        search = findViewById(R.id.setButton);
-
-        /*search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSearchView();
-            }
-        });
-
-         */
+        databse = findViewById(R.id.databaseButton);
 
         connect = findViewById(R.id.connectButton);
         connect.setOnClickListener(new View.OnClickListener() {
@@ -43,13 +34,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        test = findViewById(R.id.testViewBtn);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openTestView();
-            }
-        });
 
 
     }
@@ -64,11 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void openVideoView(){
         Intent intent = new Intent(this, GetLiveStream.class);
-        startActivity(intent);
-    }
-
-    private void openTestView(){
-        Intent intent = new Intent(this, TestConnection.class);
         startActivity(intent);
     }
 }

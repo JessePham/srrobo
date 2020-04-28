@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -44,7 +46,7 @@ public class GetConnection extends AppCompatActivity {
     public static final String MyPREFERENCES = "CurrentUserIP";
     public static final String IP = "ipKey";
     SharedPreferences sharedPreferences;
-    TextView test;
+    TextView test, status;
 
     private static final String PORT_NO = "21567";
     private DatabaseReference databaseRef;
@@ -107,7 +109,8 @@ public class GetConnection extends AppCompatActivity {
         editor.putString(IP, ipText);
         editor.commit();
 
-        test.setText(sharedPreferences.getString(IP, null));
+        test.setText(sharedPreferences.getString("IP Address:" + IP, null));
+        //status.setText(sharedPreferences.getString("STATUS:" + IP, null));
 
 
         // Write a message to the database
@@ -118,37 +121,9 @@ public class GetConnection extends AppCompatActivity {
         // databaseRef.setValueAsync(obj);
 
 
-    }
-
-    public class Socket_AsyncTask extends AsyncTask<Void, Void, Void> {
-        Socket socket;
-        String response;
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-
-                InetAddress inetAddress = InetAddress.getByName(GetConnection.wifiModuleIp);
-                socket = new java.net.Socket(inetAddress, GetConnection.wifiModulePort);
-                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-                dataOutputStream.writeBytes(CMD);
-                dataOutputStream.close();
-                socket.close();
 
 
-                ////Send msg to server
-                //            OutputStream outputStream = socket.getOutputStream();
-                //            PrintStream printStream = new PrintStream(outputStream);
-                //            printStream.print(args[1]);
 
-
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
 
     }
 }

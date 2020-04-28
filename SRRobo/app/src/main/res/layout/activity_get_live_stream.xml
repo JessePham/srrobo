@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#93AFF4"
     tools:context=".GetLiveStream">
 
 
     <fragment
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mapView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="355dp"
+        android:layout_width="366dp"
         android:layout_height="181dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/goFowardBtn"
         app:layout_constraintVertical_bias="0.819"
         app:srcCompat="@drawable/arrow_up_foreground" />
-<!--
+    <!--
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="355dp"
@@ -101,10 +99,10 @@
         android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapView"
-        app:layout_constraintVertical_bias="0.004"
+        app:layout_constraintVertical_bias="0.046"
         app:srcCompat="@mipmap/ping" />
 
     <Button
@@ -117,9 +115,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/goLeftBtn"
+        app:layout_constraintHorizontal_bias="0.355"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pingHereBtn"
-        app:layout_constraintVertical_bias="0.142" />
+        app:layout_constraintVertical_bias="0.11" />
 
     <Button
         android:id="@+id/endRunBtn"
@@ -131,7 +130,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/goBackwardBtn"
-        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pingHereBtn"
         app:layout_constraintVertical_bias="0.649" />
