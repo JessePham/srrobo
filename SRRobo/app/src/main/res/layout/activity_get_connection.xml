@@ -9,8 +9,8 @@
 
     <View
         android:id="@+id/view6"
-        android:layout_width="372dp"
-        android:layout_height="639dp"
+        android:layout_width="371dp"
+        android:layout_height="594dp"
         android:alpha="0.25"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,29 +33,27 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Enter Raspberry IP Address"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.068" />
+        app:layout_constraintTop_toTopOf="@+id/view6" />
 
     <EditText
         android:id="@+id/ipAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:singleLine="false"
         android:text="10.251.111.161"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/connectBtn"
@@ -63,25 +61,21 @@
         android:layout_height="53dp"
         android:layout_below="@+id/ipAddress"
 
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:text="Connect"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ipAddress"
-        app:layout_constraintVertical_bias="0.873" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/testText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="IP Address: 10.251.111.161"
+        android:text="IP Address: N/A"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/connectBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ipAddress"
-        app:layout_constraintVertical_bias="0.744" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
