@@ -178,5 +178,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/view5" />
 
+    <Button
+        android:id="@+id/stopBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:height="100dp"
+        android:background="#F83636"
+        android:text="STOP"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/goRightBtn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/goLeftBtn"
+        app:layout_constraintTop_toBottomOf="@+id/goFowardBtn" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,7 +44,7 @@ import android.widget.Toast;
 public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallback{
 
     //EditText addrField;
-    Button endBtn, autoBtn;
+    Button endBtn, autoBtn, stopBtn;
     WebView streamView;
     ImageButton upBtn, backBtn, leftBtn, rightBtn, pingBtn;
     public static String CMD = "0";
@@ -219,6 +219,16 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
 
 
         //manual control
+        stopBtn = (Button) findViewById(R.id.stopBtn);
+        stopBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CMD = "End";
+                commandDatabaseRef.setValue(CMD);
+
+            }
+        });
+        
         upBtn = (ImageButton)findViewById(R.id.goFowardBtn);
         upBtn.setOnClickListener(new OnClickListener() {
             @Override
