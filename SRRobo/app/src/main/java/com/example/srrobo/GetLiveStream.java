@@ -1,11 +1,9 @@
 package com.example.srrobo;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -19,30 +17,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.collection.LLRBNode;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.android.gms.maps.model.MapStyleOptions;
 
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.location.Location;
-import android.os.AsyncTask;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,10 +44,11 @@ import android.widget.Toast;
 public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallback{
 
     //EditText addrField;
-    Button endBtn, autoBtn;
+    Button endBtn, autoBtn, stopBtn;
     WebView streamView;
     ImageButton upBtn, backBtn, leftBtn, rightBtn, pingBtn;
     public static String CMD = "0";
+    private static String currentMode = "m";
 
     //XML file to store current Ip and Port
     public static final String MyPREFERENCES = "CurrentUserIP";
@@ -72,7 +63,7 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
     private DatabaseReference gpsDatabaseRef;
     private DatabaseReference gpsLatDatabaseRef;
     private DatabaseReference gpsLongDatabaseRef;
-    private DatabaseReference manualDatabaseRef;
+    private DatabaseReference modeDatabaseRef;
     private LatLng currentLocation;
 
     private Circle currentPointCircle;
@@ -101,7 +92,7 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
 
         commandDatabaseRef = FirebaseDatabase.getInstance().getReference("command");
         gpsDatabaseRef = FirebaseDatabase.getInstance().getReference("gps");
-        manualDatabaseRef = FirebaseDatabase.getInstance().getReference("manual");
+        modeDatabaseRef = FirebaseDatabase.getInstance().getReference("mode");
 
         //has long and lat child as well
         gpsLatDatabaseRef = FirebaseDatabase.getInstance().getReference("gps/lat");
@@ -148,17 +139,6 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-        // longitude = -longitude;
-
-       // currentLocation = new LatLng(latitude, longitude);
-
-        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 4));
-
-       // followCar(currentLocation);
-        // googleMap.setOnPolylineClickListener
-
-
-        //followCar to keep updating
 
 
     }
@@ -183,7 +163,7 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
         //check if string has "http://" and "/" at the end just in case
         SharedPreferences.Editor editor = sharedPreferences.edit();
         ipText =  sharedPreferences.getString(IP, null);
-        if (ipText != null){
+        if (ipText != "10.251.111.161"){
             playStream();
         } else {
             Toast.makeText(GetLiveStream.this,
@@ -195,8 +175,32 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
         autoBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                autoBtn.setEnabled(autoBtn.isEnabled()); //switches it back and forth
-                manualDatabaseRef.setValue(autoBtn.isEnabled()); //saves to firebase for robot to read
+                if (currentMode == "a"){
+                    upBtn.setEnabled(true); //switches it back and forth
+                    backBtn.setEnabled(true); //switches it back and forth
+                    rightBtn.setEnabled(true); //switches it back and forth
+                    leftBtn.setEnabled(true); //switches it back and forth
+                    modeDatabaseRef.setValue("Manual"); //saves to firebase for robot to read
+                    commandDatabaseRef.setValue("End"); //saves to firebase for robot to read
+                    currentMode = "m";
+
+                    autoBtn.setText("MANUAL");
+                    autoBtn.setBackgroundColor(Color.parseColor("#FF3F51B5"));
+
+
+                } else if (currentMode == "m"){
+                    upBtn.setEnabled(false); //switches it back and forth
+                    backBtn.setEnabled(false); //switches it back and forth
+                    rightBtn.setEnabled(false); //switches it back and forth
+                    leftBtn.setEnabled(false); //switches it back and forth
+                    modeDatabaseRef.setValue("Auto"); //saves to firebase for robot to read
+                    commandDatabaseRef.setValue("End"); //saves to firebase for robot to read
+                    currentMode = "a";
+
+                    autoBtn.setText("AUTO");
+                    autoBtn.setBackgroundColor(Color.parseColor("#FF0000"));
+
+                }
 
             }
         });
@@ -204,6 +208,16 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
 
 
         //manual control
+        stopBtn = (Button) findViewById(R.id.stopBtn);
+        stopBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CMD = "End";
+                commandDatabaseRef.setValue(CMD);
+
+            }
+        });
+        
         upBtn = (ImageButton)findViewById(R.id.goFowardBtn);
         upBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -248,50 +262,56 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
         endBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                endRun();
                 CMD = "End";
                 commandDatabaseRef.setValue(CMD);
+                modeDatabaseRef.setValue("Manual");
+                endRun();
+
+
 
             }
         });
         //disables manual control if auto is disabled
-        if (autoBtn.isEnabled() == false){
+        if (currentMode == "a"){
+
             upBtn.setEnabled(false);
             leftBtn.setEnabled(false);
             rightBtn.setEnabled(false);
             backBtn.setEnabled(false);
+
+
+
+
         } else {
             upBtn.setEnabled(true);
             leftBtn.setEnabled(true);
             rightBtn.setEnabled(true);
             backBtn.setEnabled(true);
+            upBtn.setImageAlpha(255);
+            leftBtn.setImageAlpha(255);
+            rightBtn.setImageAlpha(255);
+            backBtn.setImageAlpha(255);
+
         }
 
         pingBtn = (ImageButton) findViewById(R.id.pingHereBtn);
         pingBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //CMD = "Ping";
                 pingLocation(currentLocation);
-
-                commandDatabaseRef.setValue(CMD);
-
-
             }
         });
-
-
 
     }
 
     private void endRun(){
-        //save video to google drive
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-        StorageReference imagesRef = storageRef.child("images"); //points to images folder
+        Toast.makeText(getApplicationContext(),"Ending run! Redirecting back to home page...", Toast.LENGTH_SHORT).show();
+        backToMain();
+    }
 
-
-
+    private void backToMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void pingLocation(LatLng latlng){
@@ -356,13 +376,7 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
     }
 
 
-    private void playStream(){//String src){
-        //Uri UriSrc = Uri.parse(src);
-        //Uri aTest = Uri.parse("http://10.251.111.161:8081/");
-        //Uri aTest = Uri.parse("http://www.ted.com/talks/download/video/8584/talk/761");
-
-
-
+    private void playStream(){
         //use aTest for testing the video feed
         String aTest = "http://10.251.111.161:8081/";
 

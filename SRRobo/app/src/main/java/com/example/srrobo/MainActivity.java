@@ -10,12 +10,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Button databse, connect, video;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databse = findViewById(R.id.databaseButton);
 
         connect = findViewById(R.id.connectButton);
         connect.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
                 openVideoView();
             }
         });
+
+
+
 
 
 
