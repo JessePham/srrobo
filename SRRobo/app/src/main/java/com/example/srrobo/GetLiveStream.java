@@ -139,17 +139,6 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-        // longitude = -longitude;
-
-       // currentLocation = new LatLng(latitude, longitude);
-
-        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 4));
-
-       // followCar(currentLocation);
-        // googleMap.setOnPolylineClickListener
-
-
-        //followCar to keep updating
 
 
     }
@@ -387,13 +376,7 @@ public class GetLiveStream extends AppCompatActivity implements OnMapReadyCallba
     }
 
 
-    private void playStream(){//String src){
-        //Uri UriSrc = Uri.parse(src);
-        //Uri aTest = Uri.parse("http://10.251.111.161:8081/");
-        //Uri aTest = Uri.parse("http://www.ted.com/talks/download/video/8584/talk/761");
-
-
-
+    private void playStream(){
         //use aTest for testing the video feed
         String aTest = "http://10.251.111.161:8081/";
 
