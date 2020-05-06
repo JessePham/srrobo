@@ -38,12 +38,48 @@ public class TestConnection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                try {
+                    testTestCommand();
+                    status.setText("hi");
+                } catch (JSchException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
 
 
 
+    }
+
+
+    public void testTestCommand() throws JSchException, IOException {
+        JSch jsch = new JSch();
+        Session session = jsch.getSession("admin", "192.168.1.24", 21567); //maybe change port to 22
+        session.setPassword("SRRobo2020");
+        jsch.addIdentity("src/test/resources/id_rsa"); //idk if we need this
+        java.util.Properties config = new java.util.Properties();
+        config.put("StrictHostKeyChecking", "no");
+        session.setConfig(config);
+        session.connect();
+
+        ChannelShell channel = (ChannelShell) session.openChannel("shell");
+        PipedInputStream pis = new PipedInputStream();
+        PipedOutputStream pos = new PipedOutputStream();
+        channel.setInputStream(new PipedInputStream(pos));
+        channel.setOutputStream(new PipedOutputStream(pis));
+        channel.connect();
+        pos.write("python server.py".getBytes()); //might need to change this but prob not?
+        pos.flush();
+        //verifyResponse(pis, "test run bob");
+        status.setText("it works?");
+        pis.close();
+        pos.close();
+        channel.disconnect();
+        session.disconnect();
     }
 
 
